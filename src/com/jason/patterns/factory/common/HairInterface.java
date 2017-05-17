@@ -1,0 +1,11 @@
+package com.jason.patterns.factory.common;
+/**
+ * 发型接口
+ * @author zhaoyl
+ * @createdate 2017年5月17日
+ */
+public interface HairInterface {
+
+	//实现了发型
+	public void draw();
+}
