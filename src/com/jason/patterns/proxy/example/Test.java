@@ -7,6 +7,7 @@ import com.jason.patterns.proxy.example.common.Moveable;
 import com.jason.patterns.proxy.example.dynamicproxy.cglibproxy.CglibProxy;
 import com.jason.patterns.proxy.example.dynamicproxy.cglibproxy.Train;
 import com.jason.patterns.proxy.example.dynamicproxy.jdkproxy.TimeHandler;
+import com.jason.patterns.proxy.example.dynamicproxy.jdkproxy.TimeHandlerCustom;
 import com.jason.patterns.proxy.example.staticparoxy.Car;
 import com.jason.patterns.proxy.example.staticparoxy.CarExtends;
 import com.jason.patterns.proxy.example.staticparoxy.CarLogProxy;
@@ -49,6 +50,7 @@ public class Test {
 		 * h InvocationHandler
 		 */
 		Moveable m = (Moveable) Proxy.newProxyInstance(cls.getClassLoader(), cls.getInterfaces(), h);
+		System.out.println(m.getClass().getName());
 		m.move();
 	}
 	
@@ -58,6 +60,15 @@ public class Test {
 		CglibProxy cglibProxy = new CglibProxy();
 		Train train = (Train) cglibProxy.getProxy(Train.class);
 		train.move();
+	}
+	
+	//模拟实现JDK动态代理
+	@org.junit.Test
+	public void testDynamicProxyByMnJDK() throws Exception{
+		Car car = new Car();
+		com.jason.patterns.proxy.example.dynamicproxy.jdkproxy.InvocationHandler h = new TimeHandlerCustom(car);
+		Moveable m = (Moveable) com.jason.patterns.proxy.example.dynamicproxy.jdkproxy.Proxy.newProxyInstance(Moveable.class,h);
+		m.move();
 	}
 	
 }
